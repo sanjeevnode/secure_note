@@ -1,0 +1,31 @@
+{
+  "buildCommand": "flutter build web --release",
+  "outputDirectory": "build/web",
+  "devCommand": "flutter run -d web-server --web-port 3000",
+  "framework": null,
+  "installCommand": "if ! command -v flutter &> /dev/null; then git clone https://github.com/flutter/flutter.git -b stable --depth 1 && export PATH=\"$PATH:`pwd`/flutter/bin\"; fi && flutter pub get",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cross-Origin-Embedder-Policy",
+          "value": "require-corp"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    }
+  ]
+}
