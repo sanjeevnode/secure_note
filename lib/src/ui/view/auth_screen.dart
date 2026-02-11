@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secure_note/src/src.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -10,6 +11,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Auth Screen')));
+    return Scaffold(
+      body: Center(child: Text("Auth Screen", style: AppTextStyle.text2xlBold)),
+    );
   }
 }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
-
 class AppTextStyle {
   const AppTextStyle._();
 
   static const _baseTextStyle = TextStyle(
     fontWeight: FontWeight.w400,
-    fontFamily: 'IBM_Plex_Sans',
+    fontFamily: 'Noto_Sans_Mono',
     decoration: TextDecoration.none,
     textBaseline: TextBaseline.alphabetic,
-    color: AppColors.dark900,
+    color: Colors.black,
   );
 
   static final displayH1 = _baseTextStyle.copyWith(
