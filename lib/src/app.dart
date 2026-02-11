@@ -20,10 +20,14 @@ class _AppView extends StatefulWidget {
 class __AppViewState extends State<_AppView> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: AppTheme.standard,
       title: 'Secure Note',
       debugShowCheckedModeBanner: false,
-      home: AuthScreen(),
+      builder: (context, child) {
+        return CustomBehaviour(child: child!);
+      },
+      home: const AuthScreen(),
     );
   }
 }
