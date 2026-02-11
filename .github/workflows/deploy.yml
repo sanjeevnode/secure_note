@@ -35,7 +35,7 @@ jobs:
       
       # Step 5: Build Flutter web app
       - name: Build web app
-        run: flutter build web --release --web-renderer canvaskit
+        run: flutter build web --release
       
       # Step 6: Deploy to Vercel (Production)
       - name: Deploy to Vercel (Production)
