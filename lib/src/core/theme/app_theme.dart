@@ -85,7 +85,7 @@ class AppTheme {
           backgroundColor: AppColors.tealPrimary,
           foregroundColor: AppColors.white,
           elevation: 0,
-          shadowColor: AppColors.tealPrimary.withOpacity(0.25),
+          shadowColor: AppColors.tealPrimary.withAlpha(25),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: AppTextStyle.textMdSemibold,
@@ -140,7 +140,7 @@ class AppTheme {
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.tealPrimary.withOpacity(0.5);
+            return AppColors.tealPrimary.withAlpha(126);
           }
           return AppColors.switchBackground;
         }),
