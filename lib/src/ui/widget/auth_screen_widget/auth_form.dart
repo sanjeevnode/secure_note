@@ -23,8 +23,8 @@ class _AuthFormState extends State<AuthForm> {
     passwordController.clear();
     usernameController.clear();
     _formKey.currentState?.reset();
-    widget.onIndexChanged?.call(index);
     setState(() {});
+    widget.onIndexChanged?.call(index);
   }
 
   void onSubmit() {
