@@ -27,7 +27,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.switchBackground,
+        color: AppColors.mutedBackground,
         borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
       ),
       padding: const EdgeInsets.all(2),
@@ -44,7 +44,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
                   decoration: BoxDecoration(
                     color: cuurrentIndex == AuthConstants.loginIndex
                         ? AppColors.white
-                        : AppColors.switchBackground,
+                        : AppColors.mutedBackground,
                     borderRadius: BorderRadius.circular(
                       AppConstants.appBorderRadius,
                     ),
@@ -64,7 +64,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
                   decoration: BoxDecoration(
                     color: cuurrentIndex == AuthConstants.registerIndex
                         ? AppColors.white
-                        : AppColors.switchBackground,
+                        : AppColors.mutedBackground,
                     borderRadius: BorderRadius.circular(
                       AppConstants.appBorderRadius,
                     ),

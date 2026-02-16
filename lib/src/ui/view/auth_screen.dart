@@ -16,12 +16,21 @@ class _AuthScreenState extends State<AuthScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
           const AppIcon(),
           const SizedBox(height: 12),
           Text(AppConstants.appName, style: AppTextStyle.text2xlSemibold),
           const SizedBox(height: 20),
           const AuthForm(),
+          const SizedBox(height: 20),
+          Text(
+            AppConstants.appDesc,
+            style: AppTextStyle.textSmRegular.copyWith(
+              color: AppColors.grayDark,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

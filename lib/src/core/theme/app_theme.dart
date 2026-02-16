@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secure_note/src/core/constants/constants.dart%20%20';
 import 'app_colors.dart';
 import 'app_text_style.dart';
 
@@ -42,26 +43,27 @@ class AppTheme {
 
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
+        isDense: true,
         filled: true,
         fillColor: AppColors.grayLightest,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
           borderSide: const BorderSide(color: AppColors.grayBorder, width: 1),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
           borderSide: const BorderSide(color: AppColors.grayBorder, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
           borderSide: const BorderSide(color: AppColors.tealPrimary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
           borderSide: const BorderSide(color: AppColors.redBorder, width: 1),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
           borderSide: const BorderSide(color: AppColors.redPrimary, width: 2),
         ),
         labelStyle: AppTextStyle.textMdMedium.copyWith(
@@ -86,7 +88,9 @@ class AppTheme {
           foregroundColor: AppColors.white,
           elevation: 0,
           shadowColor: AppColors.tealPrimary.withAlpha(25),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: AppTextStyle.textMdSemibold,
         ),
@@ -97,7 +101,9 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.grayDarker,
           side: const BorderSide(color: AppColors.grayBorderDark, width: 1),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           textStyle: AppTextStyle.textMdSemibold,
         ),
@@ -117,7 +123,9 @@ class AppTheme {
         backgroundColor: AppColors.tealPrimary,
         foregroundColor: AppColors.white,
         elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
+        ),
       ),
 
       // Icon Theme
@@ -183,7 +191,9 @@ class AppTheme {
         contentTextStyle: AppTextStyle.textMdRegular.copyWith(
           color: AppColors.white,
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
+        ),
         behavior: SnackBarBehavior.floating,
       ),
 
