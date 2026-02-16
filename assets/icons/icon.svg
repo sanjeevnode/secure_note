@@ -1,0 +1,32 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="shield_gradient" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#14B8A6"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with 16px border radius -->
+  <rect
+    x="0"
+    y="0"
+    width="64"
+    height="64"
+    rx="16"
+    fill="url(#shield_gradient)"
+  />
+
+  <!-- Shield centered, scaled to 32x32 -->
+  <g transform="translate(16,16) scale(1.3333)">
+    <path
+      d="M12 21C12 21 18 17.5 18 12V6.5L12 4.5L6 6.5V12C6 17.5 12 21 12 21Z"
+      stroke="white"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+  </g>
+
+</svg>

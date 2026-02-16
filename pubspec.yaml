@@ -12,6 +12,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  flutter_svg: ^2.2.1
+
 
     
   cupertino_icons: ^1.0.8
@@ -21,10 +24,20 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  flutter_gen: ^5.11.0
+  build_runner: ^2.8.0
+  flutter_launcher_icons: ^0.14.4
+  rename: ^3.1.0
 
 
 flutter:  
   uses-material-design: true
+
+  generate: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
   
   fonts:
     - family: Noto_Sans_Mono
@@ -38,11 +51,27 @@ flutter:
         - asset: assets/fonts/Noto_Sans_Mono/NotoSansMono-Bold.ttf
           weight: 700
 
-  
-  
-  
-  
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/images/icon.png"
+  image_path: "assets/images/icon.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/icon.png"
 
+flutter_gen:
+  assets:
+    enabled: true
+    outputs:
+      class_name: Assets
+      package_parameter_enabled: false
+  output: lib/src/core/generated
+  line_length: 80
+
+  integrations:
+    flutter_svg: true
   
   
 
