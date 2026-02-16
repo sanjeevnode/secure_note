@@ -9,11 +9,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  void handleSubmit(AuthEntity authEntity) {
-    Logger.s("AuthEntity: ${authEntity.toString()}");
-    Toast.success("Authentication successful!");
-  }
-
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
@@ -25,8 +20,9 @@ class _AuthScreenState extends State<AuthScreen> {
           const AppIcon(),
           const SizedBox(height: 12),
           Text(AppConstants.appName, style: AppTextStyle.text2xlSemibold),
+
           const SizedBox(height: 20),
-          AuthForm(onSubmit: handleSubmit),
+          const AuthForm(),
           const SizedBox(height: 20),
           Text(
             AppConstants.appDesc,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key, this.onIndexChanged, this.onSubmit});
-  final void Function(int)? onIndexChanged;
-  final void Function(AuthEntity)? onSubmit;
+  const AuthForm({super.key});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -24,10 +23,9 @@ class _AuthFormState extends State<AuthForm> {
     usernameController.clear();
     _formKey.currentState?.reset();
     setState(() {});
-    widget.onIndexChanged?.call(index);
   }
 
-  void onSubmit() {
+  Future<void> onSubmit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -38,7 +36,20 @@ class _AuthFormState extends State<AuthForm> {
           ? usernameController.text.trim()
           : null,
     );
-    widget.onSubmit?.call(authEntity);
+    if (currentIndex == AuthConstants.registerIndex) {
+      await context.read<AuthCubit>().register(
+        email: authEntity.email,
+        password: authEntity.password,
+        username: authEntity.username!,
+      );
+      Toast.success("Registration successful! Please login.");
+      return;
+    }
+    await context.read<AuthCubit>().login(
+      email: authEntity.email,
+      password: authEntity.password,
+    );
+    Toast.success("Login successful!");
   }
 
   @override
