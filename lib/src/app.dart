@@ -22,7 +22,8 @@ class __AppViewState extends State<_AppView> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.standard,
-      title: 'Secure Note',
+      scaffoldMessengerKey: Toast.scaffoldKey,
+      title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         return CustomBehaviour(child: child!);

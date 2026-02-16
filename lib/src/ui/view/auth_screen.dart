@@ -11,6 +11,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   void handleSubmit(AuthEntity authEntity) {
     Logger.s("AuthEntity: ${authEntity.toString()}");
+    Toast.success("Authentication successful!");
   }
 
   @override
