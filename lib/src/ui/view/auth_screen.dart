@@ -9,6 +9,10 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  void handleSubmit(AuthEntity authEntity) {
+    Logger.s("AuthEntity: ${authEntity.toString()}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
@@ -21,11 +25,11 @@ class _AuthScreenState extends State<AuthScreen> {
           const SizedBox(height: 12),
           Text(AppConstants.appName, style: AppTextStyle.text2xlSemibold),
           const SizedBox(height: 20),
-          const AuthForm(),
+          AuthForm(onSubmit: handleSubmit),
           const SizedBox(height: 20),
           Text(
             AppConstants.appDesc,
-            style: AppTextStyle.textSmRegular.copyWith(
+            style: AppTextStyle.textMdRegular.copyWith(
               color: AppColors.grayDark,
             ),
             textAlign: TextAlign.center,

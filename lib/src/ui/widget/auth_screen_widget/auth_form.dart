@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:secure_note/src/src.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  const AuthForm({super.key, this.onIndexChanged, this.onSubmit});
+  final void Function(int)? onIndexChanged;
+  final void Function(AuthEntity)? onSubmit;
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -19,7 +21,23 @@ class _AuthFormState extends State<AuthForm> {
     emailController.clear();
     passwordController.clear();
     usernameController.clear();
+    widget.onIndexChanged?.call(index);
     setState(() {});
+  }
+
+  void onSubmit() {
+    if (emailController.text.trim().isEmpty ||
+        passwordController.text.trim().isEmpty) {
+      return;
+    }
+    final authEntity = AuthEntity(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      username: currentIndex == AuthConstants.registerIndex
+          ? usernameController.text.trim()
+          : null,
+    );
+    widget.onSubmit?.call(authEntity);
   }
 
   @override
@@ -85,12 +103,37 @@ class _AuthFormState extends State<AuthForm> {
 
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  currentIndex == AuthConstants.loginIndex
-                      ? AuthConstants.loginText
-                      : AuthConstants.registerText,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: AppColors.primaryGradient,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.appBorderRadius,
+                  ), // match button radius
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    padding: const EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        AppConstants.appBorderRadius,
+                      ),
+                    ),
+                  ),
+                  onPressed: onSubmit,
+                  child: Text(
+                    currentIndex == AuthConstants.loginIndex
+                        ? AuthConstants.loginText
+                        : AuthConstants.createAccountText,
+                    style: AppTextStyle.textLgSemibold.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
