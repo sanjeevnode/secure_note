@@ -11,23 +11,18 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Container(
-            constraints: BoxConstraints(
-              maxWidth: 1200,
-              maxHeight: getHeight(context, 100),
-            ),
-            width: double.infinity,
-            color: Colors.pink,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [Text("Welcome", style: AppTextStyle.displayH1)],
-              ),
-            ),
-          ),
-        ),
+    return AppPageLayout(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 50),
+          const AppIcon(),
+          const SizedBox(height: 12),
+          Text(AppConstants.appName, style: AppTextStyle.text2xlSemibold),
+          const SizedBox(height: 20),
+          const AuthForm(),
+        ],
       ),
     );
   }
