@@ -3,43 +3,40 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main  # Triggers on push to main branch
-  pull_request:
-    branches:
-      - main  # Triggers on PR to main for preview deployments
-  workflow_dispatch:  # Allows manual trigger from GitHub UI
+      - main   # Only deploy when main branch is updated
+  workflow_dispatch:   # Allow manual deploy from GitHub UI
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     
     steps:
-      # Step 1: Checkout the repository code
+      # Step 1: Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
       
-      # Step 2: Set up Flutter environment
+      # Step 2: Setup Flutter
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.2'  # Match your local Flutter version
+          flutter-version: '3.35.2'
           channel: 'stable'
+          cache: true
       
-      # Step 3: Verify Flutter installation
+      # Step 3: Verify Flutter
       - name: Verify Flutter
         run: flutter doctor -v
       
-      # Step 4: Get Flutter dependencies
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: flutter pub get
       
-      # Step 5: Build Flutter web app
+      # Step 5: Build web app
       - name: Build web app
         run: flutter build web --release
       
-      # Step 6: Deploy to Vercel (Production)
-      - name: Deploy to Vercel (Production)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      # Step 6: Deploy to Vercel (Production only)
+      - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -47,13 +44,3 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           working-directory: ./build/web
           vercel-args: '--prod'
-      
-      # Step 7: Deploy to Vercel (Preview)
-      - name: Deploy to Vercel (Preview)
-        if: github.event_name == 'pull_request'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./build/web
