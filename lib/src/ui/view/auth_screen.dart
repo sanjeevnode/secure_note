@@ -11,8 +11,19 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Auth Screen", style: AppTextStyle.text2xlBold)),
+    return AppPageLayout(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 50),
+          const AppIcon(),
+          const SizedBox(height: 12),
+          Text(AppConstants.appName, style: AppTextStyle.text2xlSemibold),
+          const SizedBox(height: 20),
+          const AuthForm(),
+        ],
+      ),
     );
   }
 }
