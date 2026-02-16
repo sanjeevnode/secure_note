@@ -11,6 +11,7 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
@@ -21,13 +22,13 @@ class _AuthFormState extends State<AuthForm> {
     emailController.clear();
     passwordController.clear();
     usernameController.clear();
+    _formKey.currentState?.reset();
     widget.onIndexChanged?.call(index);
     setState(() {});
   }
 
   void onSubmit() {
-    if (emailController.text.trim().isEmpty ||
-        passwordController.text.trim().isEmpty) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     final authEntity = AuthEntity(
@@ -58,86 +59,86 @@ class _AuthFormState extends State<AuthForm> {
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SwitchWidget(
-              cuurrentIndex: currentIndex,
-              onIndexChanged: onIndexChanged,
-            ),
-            const SizedBox(height: 32),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SwitchWidget(
+                cuurrentIndex: currentIndex,
+                onIndexChanged: onIndexChanged,
+              ),
+              const SizedBox(height: 32),
 
-            if (currentIndex == AuthConstants.registerIndex) ...[
-              TextFormField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  hintText: "Choose a username",
-                  labelText: 'Username',
-                  prefixIcon: Icon(Icons.person_outline),
+              if (currentIndex == AuthConstants.registerIndex) ...[
+                TextFormField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                    hintText: AuthConstants.usernameHint,
+                    labelText: AuthConstants.usernameLabel,
+                    prefixIcon: Icon(Icons.person_outline),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return AuthConstants.usernameRequired;
+                    }
+                    return null;
+                  },
                 ),
+                const SizedBox(height: 24),
+              ],
+
+              TextFormField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  hintText: AuthConstants.emailHint,
+                  labelText: AuthConstants.emailLabel,
+                  prefixIcon: Icon(Icons.email_outlined),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return AuthConstants.emailRequired;
+                  }
+                  if (!value.contains('@')) {
+                    return AuthConstants.emailInvalid;
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 24),
+              TextFormField(
+                controller: passwordController,
+                decoration: const InputDecoration(
+                  hintText: AuthConstants.passwordHint,
+                  labelText: AuthConstants.passwordLabel,
+                  prefixIcon: Icon(Icons.lock_outline),
+                ),
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return AuthConstants.passwordRequired;
+                  }
+                  if (value.length < 6) {
+                    return AuthConstants.passwordMinLength;
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 24),
+
+              SizedBox(
+                width: double.infinity,
+                child: GradientButton(
+                  label: currentIndex == AuthConstants.loginIndex
+                      ? AuthConstants.loginText
+                      : AuthConstants.createAccountText,
+                  onSubmit: onSubmit,
+                ),
+              ),
             ],
-
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                hintText: "your@email.com",
-                labelText: 'Email',
-                prefixIcon: Icon(Icons.email_outlined),
-              ),
-            ),
-            const SizedBox(height: 24),
-            TextFormField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                hintText: "********",
-                labelText: 'Password',
-                prefixIcon: Icon(Icons.lock_outline),
-              ),
-              obscureText: true,
-            ),
-
-            const SizedBox(height: 24),
-
-            SizedBox(
-              width: double.infinity,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: AppColors.primaryGradient,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(
-                    AppConstants.appBorderRadius,
-                  ), // match button radius
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    padding: const EdgeInsets.all(20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        AppConstants.appBorderRadius,
-                      ),
-                    ),
-                  ),
-                  onPressed: onSubmit,
-                  child: Text(
-                    currentIndex == AuthConstants.loginIndex
-                        ? AuthConstants.loginText
-                        : AuthConstants.createAccountText,
-                    style: AppTextStyle.textLgSemibold.copyWith(
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
