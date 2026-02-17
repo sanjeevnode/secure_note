@@ -43,13 +43,22 @@ class _AuthFormState extends State<AuthForm> {
         username: authEntity.username!,
       );
       Toast.success("Registration successful! Please login.");
+      setState(() {
+        currentIndex = AuthConstants.loginIndex;
+      });
       return;
+    } else {
+      await context.read<AuthCubit>().login(
+        email: authEntity.email,
+        password: authEntity.password,
+      );
+      if (!mounted) return;
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteNames.home,
+        (_) => false,
+      );
     }
-    await context.read<AuthCubit>().login(
-      email: authEntity.email,
-      password: authEntity.password,
-    );
-    Toast.success("Login successful!");
   }
 
   @override

@@ -38,7 +38,8 @@ class __AppViewState extends State<_AppView> {
       builder: (context, child) {
         return CustomBehaviour(child: child!);
       },
-      home: const Splash(),
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: AppRouteNames.splash,
     );
   }
 }
