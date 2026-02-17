@@ -25,6 +25,7 @@ dependencies:
   firebase_auth: ^6.1.4
   dio: ^5.9.1
   equatable: ^2.0.8
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +79,15 @@ flutter_gen:
   line_length: 80
 
   integrations:
-    flutter_svg: true
+    flutter_svg: 
+    
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/icon.png
+  web: true
+  android: false
+  ios: false
   
   
 
