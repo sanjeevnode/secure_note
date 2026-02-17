@@ -9,6 +9,7 @@ class GradientButton extends StatelessWidget {
     this.buttonStyle,
     this.gradient,
     this.textStyle,
+    this.isLoading = false,
   });
 
   final void Function()? onSubmit;
@@ -16,6 +17,7 @@ class GradientButton extends StatelessWidget {
   final ButtonStyle? buttonStyle;
   final Gradient? gradient;
   final TextStyle? textStyle;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +40,28 @@ class GradientButton extends StatelessWidget {
             ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(18),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   AppConstants.appBorderRadius,
                 ),
               ),
             ),
-        onPressed: onSubmit,
-        child: Text(
-          label,
-          style:
-              textStyle ??
-              AppTextStyle.textLgSemibold.copyWith(color: AppColors.white),
-        ),
+        onPressed: isLoading ? null : onSubmit,
+        child: isLoading
+            ? const LoadingWidget(
+                size: 24,
+                color: AppColors.white,
+                strokeWidth: 1,
+              )
+            : Text(
+                label,
+                style:
+                    textStyle ??
+                    AppTextStyle.textLgSemibold.copyWith(
+                      color: AppColors.white,
+                    ),
+              ),
       ),
     );
   }

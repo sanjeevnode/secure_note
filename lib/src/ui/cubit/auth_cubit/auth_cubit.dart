@@ -8,12 +8,18 @@ part 'auth_cubit_state.dart';
 class AuthCubit extends Cubit<AuthCubitState> {
   AuthCubit({required AuthRepository authRepository})
     : _authRepository = authRepository,
-      super(AuthCubitState());
+      super(const AuthCubitState());
 
   final AuthRepository _authRepository;
 
+  // Initialize auth state
+  Future<void> initialize() async {
+    emit(const AuthCubitState());
+  }
+
   /// Login with email and password
   Future<void> login({required String email, required String password}) async {
+    emit(state.copyWith(loginStatus: Status.loading));
     final (error, user) = await _authRepository.login(
       email: email,
       password: password,
@@ -21,10 +27,12 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
     if (error != null) {
       Logger.e("AuthCubit[login] : $error");
+      emit(state.copyWith(loginStatus: Status.error));
       return;
     }
 
     Logger.s("AuthCubit[login] : Login successful. User: ${user?.email}");
+    emit(state.copyWith(loginStatus: Status.success));
   }
 
   /// Register with email, password and username
@@ -33,6 +41,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     required String password,
     required String username,
   }) async {
+    emit(state.copyWith(registerStatus: Status.loading));
     final (error, user) = await _authRepository.register(
       email: email,
       password: password,
@@ -41,12 +50,14 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
     if (error != null) {
       Logger.e("AuthCubit[register] : $error");
+      emit(state.copyWith(registerStatus: Status.error));
       return;
     }
 
     Logger.s(
       "AuthCubit[register] : Registration successful. User: ${user?.email}",
     );
+    emit(state.copyWith(registerStatus: Status.success));
   }
 
   /// Logout current user

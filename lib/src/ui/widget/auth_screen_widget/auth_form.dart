@@ -148,14 +148,23 @@ class _AuthFormState extends State<AuthForm> {
 
               const SizedBox(height: 24),
 
-              SizedBox(
-                width: double.infinity,
-                child: GradientButton(
-                  label: currentIndex == AuthConstants.loginIndex
-                      ? AuthConstants.loginText
-                      : AuthConstants.createAccountText,
-                  onSubmit: onSubmit,
-                ),
+              BlocBuilder<AuthCubit, AuthCubitState>(
+                builder: (context, state) {
+                  final isLoading = currentIndex == AuthConstants.loginIndex
+                      ? state.loginStatus == Status.loading
+                      : state.registerStatus == Status.loading;
+
+                  return SizedBox(
+                    width: double.infinity,
+                    child: GradientButton(
+                      label: currentIndex == AuthConstants.loginIndex
+                          ? AuthConstants.loginText
+                          : AuthConstants.createAccountText,
+                      onSubmit: onSubmit,
+                      isLoading: isLoading,
+                    ),
+                  );
+                },
               ),
             ],
           ),

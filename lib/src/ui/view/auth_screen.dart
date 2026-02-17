@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -9,6 +10,14 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthCubit>().initialize();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
