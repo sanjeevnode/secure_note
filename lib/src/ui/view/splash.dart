@@ -22,17 +22,14 @@ class _SplashState extends State<Splash> {
     final authCubit = context.read<AuthCubit>();
     final isAuthenticated = authCubit.isAuthenticated();
     if (!mounted) return;
-    Logger.w('Splash - isAuthenticated: $isAuthenticated');
 
     if (isAuthenticated) {
-      Logger.w('Splash - Navigating to Home');
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRouteNames.home,
         (_) => false,
       );
     } else {
-      Logger.w('Splash - Navigating to Auth');
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRouteNames.auth,
@@ -43,7 +40,7 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return LoadingWrapper(
+    return const LoadingWrapper(
       isLoading: true,
       child: AppPageLayout(child: Center(child: AppIcon())),
     );
