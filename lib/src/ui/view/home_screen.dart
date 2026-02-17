@@ -19,6 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 20),
           const Text('This is the home screen of the app.'),
           const SizedBox(height: 20),
+          Text(
+            context.read<AuthCubit>().getCurrentUser()?.displayName ??
+                'No Name',
+            style: AppTextStyle.text2xlBold,
+          ),
+          const SizedBox(height: 20),
           GradientButton(
             label: 'Logout',
             onSubmit: () async {
