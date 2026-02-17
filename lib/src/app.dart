@@ -31,12 +31,14 @@ class __AppViewState extends State<_AppView> {
     return MaterialApp(
       theme: AppTheme.standard,
       scaffoldMessengerKey: Toast.scaffoldKey,
+      navigatorKey: AppRouter.navigationKey,
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
+      navigatorObservers: [AppRouter.routeObserver],
       builder: (context, child) {
         return CustomBehaviour(child: child!);
       },
-      home: const AuthScreen(),
+      home: const Splash(),
     );
   }
 }
