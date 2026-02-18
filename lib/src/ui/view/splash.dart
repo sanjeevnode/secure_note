@@ -24,6 +24,9 @@ class _SplashState extends State<Splash> {
     if (!mounted) return;
 
     if (isAuthenticated) {
+      final user = authCubit.getCurrentUser();
+      authCubit.setUser(user: user);
+
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRouteNames.home,

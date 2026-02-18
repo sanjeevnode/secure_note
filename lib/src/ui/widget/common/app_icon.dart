@@ -12,7 +12,7 @@ class AppIcon extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         gradient: const LinearGradient(colors: AppColors.primaryGradient),
-        borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
+        borderRadius: BorderRadius.circular(size * 0.25),
       ),
       child: Center(
         child: Icon(

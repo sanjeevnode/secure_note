@@ -13,6 +13,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
+      appBar: CustomAppBar(
+        leading: const [AppIcon(size: 32), SizedBox(width: 12)],
+        title: AppConstants.appName,
+        actions: [
+          BlocBuilder<AuthCubit, AuthCubitState>(
+            builder: (context, state) {
+              return UserAvatar(userName: state.user?.displayName);
+            },
+          ),
+        ],
+      ),
       child: Column(
         children: [
           const Text('Home Screen'),
@@ -25,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: AppTextStyle.text2xlBold,
           ),
           const SizedBox(height: 20),
+
           GradientButton(
             label: 'Logout',
             onSubmit: () async {

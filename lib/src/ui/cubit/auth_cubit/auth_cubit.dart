@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
 
     Logger.s("AuthCubit[login] : Login successful. User: ${user?.email}");
-    emit(state.copyWith(loginStatus: Status.success));
+    emit(state.copyWith(loginStatus: Status.success, user: user));
   }
 
   /// Register with email, password and username
@@ -70,6 +70,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
 
     Logger.s("AuthCubit[logout] : Logout successful");
+    emit(state.copyWith(resetUser: true));
   }
 
   /// Get current user
@@ -112,5 +113,10 @@ class AuthCubit extends Cubit<AuthCubitState> {
         Logger.i("AuthCubit[authStateChanges] : User signed in: ${user.uid}");
       }
     });
+  }
+
+  /// Set User
+  void setUser({User? user, bool resetUser = false}) {
+    emit(state.copyWith(user: user, resetUser: resetUser));
   }
 }

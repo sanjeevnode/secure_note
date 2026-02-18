@@ -24,4 +24,15 @@ class AuthConstants {
   static const String passwordRequired = "Password is required";
   static const String passwordMinLength =
       "Password must be at least 6 characters";
+
+  // Success messages
+  static const String registrationSuccess =
+      "Registration successful! Please login.";
+  static const String loginSuccess = "Login successful!";
+
+  // Error messages
+  static const String registrationError =
+      "Registration failed. Please try again.";
+  static const String loginError =
+      "Login failed. Please check your credentials.";
 }
