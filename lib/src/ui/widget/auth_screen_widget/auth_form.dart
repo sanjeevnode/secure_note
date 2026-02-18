@@ -14,6 +14,7 @@ class _AuthFormState extends State<AuthForm> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
+  bool showPassword = false;
 
   int currentIndex = AuthConstants.loginIndex;
   void onIndexChanged(int index) {
@@ -116,6 +117,7 @@ class _AuthFormState extends State<AuthForm> {
                   labelText: AuthConstants.emailLabel,
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
+                keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return AuthConstants.emailRequired;
@@ -129,12 +131,24 @@ class _AuthFormState extends State<AuthForm> {
               const SizedBox(height: 24),
               TextFormField(
                 controller: passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: AuthConstants.passwordHint,
                   labelText: AuthConstants.passwordLabel,
-                  prefixIcon: Icon(Icons.lock_outline),
+                  prefixIcon: const Icon(Icons.lock_outline),
+                  suffix: InkWell(
+                    onTap: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    child: Icon(
+                      showPassword ? Icons.visibility_off : Icons.visibility,
+                      color: AppColors.primaryDark,
+                      size: 20,
+                    ),
+                  ),
                 ),
-                obscureText: true,
+                obscureText: !showPassword,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return AuthConstants.passwordRequired;
