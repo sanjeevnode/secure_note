@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
@@ -80,107 +81,122 @@ class _AuthFormState extends State<AuthForm> {
             ),
           ],
         ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SwitchWidget(
-                cuurrentIndex: currentIndex,
-                onIndexChanged: onIndexChanged,
+        child: Shortcuts(
+          shortcuts: {
+            LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
+          },
+          child: Actions(
+            actions: {
+              ActivateIntent: CallbackAction<ActivateIntent>(
+                onInvoke: (intent) => onSubmit(),
               ),
-              const SizedBox(height: 32),
-
-              if (currentIndex == AuthConstants.registerIndex) ...[
-                TextFormField(
-                  controller: usernameController,
-                  decoration: const InputDecoration(
-                    hintText: AuthConstants.usernameHint,
-                    labelText: AuthConstants.usernameLabel,
-                    prefixIcon: Icon(Icons.person_outline),
+            },
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SwitchWidget(
+                    cuurrentIndex: currentIndex,
+                    onIndexChanged: onIndexChanged,
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return AuthConstants.usernameRequired;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-              ],
+                  const SizedBox(height: 32),
 
-              TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  hintText: AuthConstants.emailHint,
-                  labelText: AuthConstants.emailLabel,
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return AuthConstants.emailRequired;
-                  }
-                  if (!value.contains('@')) {
-                    return AuthConstants.emailInvalid;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  hintText: AuthConstants.passwordHint,
-                  labelText: AuthConstants.passwordLabel,
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffix: InkWell(
-                    onTap: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
+                  if (currentIndex == AuthConstants.registerIndex) ...[
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: const InputDecoration(
+                        hintText: AuthConstants.usernameHint,
+                        labelText: AuthConstants.usernameLabel,
+                        prefixIcon: Icon(Icons.person_outline),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return AuthConstants.usernameRequired;
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                  ],
+
+                  TextFormField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      hintText: AuthConstants.emailHint,
+                      labelText: AuthConstants.emailLabel,
+                      prefixIcon: Icon(Icons.email_outlined),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return AuthConstants.emailRequired;
+                      }
+                      if (!value.contains('@')) {
+                        return AuthConstants.emailInvalid;
+                      }
+                      return null;
                     },
-                    child: Icon(
-                      showPassword ? Icons.visibility_off : Icons.visibility,
-                      color: AppColors.primaryDark,
-                      size: 20,
-                    ),
                   ),
-                ),
-                obscureText: !showPassword,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return AuthConstants.passwordRequired;
-                  }
-                  if (value.length < 6) {
-                    return AuthConstants.passwordMinLength;
-                  }
-                  return null;
-                },
-              ),
-
-              const SizedBox(height: 24),
-
-              BlocBuilder<AuthCubit, AuthCubitState>(
-                builder: (context, state) {
-                  final isLoading = currentIndex == AuthConstants.loginIndex
-                      ? state.loginStatus == Status.loading
-                      : state.registerStatus == Status.loading;
-
-                  return SizedBox(
-                    width: double.infinity,
-                    child: GradientButton(
-                      label: currentIndex == AuthConstants.loginIndex
-                          ? AuthConstants.loginText
-                          : AuthConstants.createAccountText,
-                      onSubmit: onSubmit,
-                      isLoading: isLoading,
+                  const SizedBox(height: 24),
+                  TextFormField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      hintText: AuthConstants.passwordHint,
+                      labelText: AuthConstants.passwordLabel,
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffix: InkWell(
+                        onTap: () {
+                          setState(() {
+                            showPassword = !showPassword;
+                          });
+                        },
+                        child: Icon(
+                          showPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primaryDark,
+                          size: 20,
+                        ),
+                      ),
                     ),
-                  );
-                },
+                    obscureText: !showPassword,
+                    obscuringCharacter: '#',
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return AuthConstants.passwordRequired;
+                      }
+                      if (value.length < 6) {
+                        return AuthConstants.passwordMinLength;
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  BlocBuilder<AuthCubit, AuthCubitState>(
+                    builder: (context, state) {
+                      final isLoading = currentIndex == AuthConstants.loginIndex
+                          ? state.loginStatus == Status.loading
+                          : state.registerStatus == Status.loading;
+
+                      return SizedBox(
+                        width: double.infinity,
+                        child: GradientButton(
+                          label: currentIndex == AuthConstants.loginIndex
+                              ? AuthConstants.loginText
+                              : AuthConstants.createAccountText,
+                          onSubmit: onSubmit,
+                          isLoading: isLoading,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

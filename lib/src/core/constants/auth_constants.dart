@@ -15,7 +15,7 @@ class AuthConstants {
   // Form hints
   static const String usernameHint = "Choose a username";
   static const String emailHint = "your@email.com";
-  static const String passwordHint = "********";
+  static const String passwordHint = "##########";
 
   // Form validation messages
   static const String usernameRequired = "Username is required";
