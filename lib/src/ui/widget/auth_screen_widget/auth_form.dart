@@ -217,7 +217,7 @@ class _AuthFormState extends State<AuthForm> {
                               label: currentIndex == AuthConstants.loginIndex
                                   ? AuthConstants.loginText
                                   : AuthConstants.createAccountText,
-                              onSubmit: onSubmit,
+                              onSubmit: isLoading ? null : onSubmit,
                               isLoading: isLoading,
                             ),
                           );
