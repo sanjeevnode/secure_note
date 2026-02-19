@@ -25,7 +25,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: background ?? AppColors.white,
+      decoration: BoxDecoration(
+        color: background ?? AppColors.white,
+        border: const Border(
+          bottom: BorderSide(color: AppColors.grayBorder, width: 1),
+        ),
+      ),
       child: SafeArea(
         bottom: false,
         child: Center(
@@ -35,6 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               width: double.infinity,
               height: kToolbarHeight,
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
+
               child: Row(
                 children: [
                   if (showBackButton)
@@ -56,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Expanded(
                       child: Text(
                         title!,
-                        style: AppTextStyle.textLgRegular.copyWith(
+                        style: AppTextStyle.textLgSemibold.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.primaryDark,
                         ),
