@@ -17,12 +17,6 @@ class AppPageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Padding(padding: padding, child: child);
-
-    if (scrollable) {
-      content = SingleChildScrollView(child: content);
-    }
-
     return Scaffold(
       appBar: appBar,
       body: Container(
@@ -37,7 +31,23 @@ class AppPageLayout extends StatelessWidget {
                 maxHeight: getHeight(context, 100),
               ),
               width: double.infinity,
-              child: content,
+              child: scrollable
+                  ? LayoutBuilder(
+                      builder: (context, constraints) {
+                        return SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: constraints.maxHeight,
+                              minWidth: constraints.maxWidth,
+                            ),
+                            child: Padding(padding: padding, child: child),
+                          ),
+                        );
+                      },
+                    )
+                  : SizedBox.expand(
+                      child: Padding(padding: padding, child: child),
+                    ),
             ),
           ),
         ),

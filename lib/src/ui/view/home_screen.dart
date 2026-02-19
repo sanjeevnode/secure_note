@@ -13,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
+      scrollable: false,
       appBar: CustomAppBar(
         leading: const [AppIcon(size: 32), SizedBox(width: 12)],
         title: AppConstants.appName,
@@ -32,15 +33,45 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Home Screen'),
-          const SizedBox(height: 20),
-          const Text('This is the home screen of the app.'),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
+          Text(HomeConstants.heading, style: AppTextStyle.text2xlSemibold),
+          const SizedBox(height: 16),
           Text(
-            context.read<AuthCubit>().getCurrentUser()?.displayName ??
-                'No Name',
-            style: AppTextStyle.text2xlBold,
+            HomeConstants.subHeading,
+            style: AppTextStyle.textLgRegular.copyWith(
+              color: AppColors.grayDark,
+            ),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: 240,
+            child: TextFormField(
+              textInputAction: TextInputAction.search,
+              style: AppTextStyle.textMdRegular.copyWith(
+                color: AppColors.grayDarker,
+              ),
+              decoration: const InputDecoration(
+                hintText: HomeConstants.searchText,
+                fillColor: AppColors.white,
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.grayIcon,
+                  size: 20,
+                ),
+                // suffixIcon: suffixIcon,
+              ),
+            ),
+          ),
+          const Expanded(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(children: [Text("Note List")]),
+              ),
+            ),
           ),
         ],
       ),
