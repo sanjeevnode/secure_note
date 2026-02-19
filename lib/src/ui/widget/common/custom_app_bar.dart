@@ -43,7 +43,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
               child: Row(
                 children: [
-                  if (showBackButton)
+                  if (showBackButton) ...[
                     Clickable(
                       child: const Icon(
                         Icons.arrow_back_ios_sharp,
@@ -55,6 +55,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Navigator.pop(context);
                       },
                     ),
+                    const SizedBox(width: 12),
+                  ],
 
                   if (leading != null) ...leading!,
 

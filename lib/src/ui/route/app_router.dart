@@ -18,6 +18,9 @@ class AppRouter {
       case AppRouteNames.home:
         return _buildMaterialPageRoute(const HomeScreen(), name: settings.name);
 
+      case AppRouteNames.profile:
+        return _buildMaterialPageRoute(const Profile(), name: settings.name);
+
       default:
         return _buildMaterialPageRoute(const Scaffold());
     }

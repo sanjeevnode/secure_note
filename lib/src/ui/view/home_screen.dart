@@ -19,7 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           BlocBuilder<AuthCubit, AuthCubitState>(
             builder: (context, state) {
-              return UserAvatar(userName: state.user?.displayName);
+              return Clickable(
+                onTap: () {
+                  if (state.user != null) {
+                    Navigator.pushNamed(context, AppRouteNames.profile);
+                  }
+                },
+                child: UserAvatar(userName: state.user?.displayName),
+              );
             },
           ),
         ],
@@ -34,19 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
             context.read<AuthCubit>().getCurrentUser()?.displayName ??
                 'No Name',
             style: AppTextStyle.text2xlBold,
-          ),
-          const SizedBox(height: 20),
-
-          GradientButton(
-            label: 'Logout',
-            onSubmit: () async {
-              await context.read<AuthCubit>().logout();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRouteNames.auth,
-                (_) => false,
-              );
-            },
           ),
         ],
       ),
