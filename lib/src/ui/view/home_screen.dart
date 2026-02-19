@@ -46,25 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          SizedBox(
-            width: 240,
-            child: TextFormField(
-              textInputAction: TextInputAction.search,
-              style: AppTextStyle.textMdRegular.copyWith(
-                color: AppColors.grayDarker,
-              ),
-              decoration: const InputDecoration(
-                hintText: HomeConstants.searchText,
-                fillColor: AppColors.white,
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.grayIcon,
-                  size: 20,
-                ),
-                // suffixIcon: suffixIcon,
-              ),
-            ),
-          ),
+          const SearchBox(),
+          const SizedBox(height: 20),
+
           const Expanded(
             child: SingleChildScrollView(
               child: SizedBox(
