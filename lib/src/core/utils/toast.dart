@@ -10,6 +10,7 @@ class Toast {
   static SnackBar _snackBar({
     required Widget content,
     required Color color,
+    Color borderColor = AppColors.blueLight,
     Duration? duration,
   }) {
     return SnackBar(
@@ -24,7 +25,7 @@ class Toast {
       margin: const EdgeInsets.all(20),
       elevation: 10,
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: AppColors.blueLight, width: 1),
+        side: BorderSide(color: borderColor, width: 1),
         borderRadius: BorderRadius.circular(AppConstants.appBorderRadius),
       ),
     );
@@ -33,14 +34,26 @@ class Toast {
   static const _defaultDuration = Duration(seconds: 3);
   static const _padding = EdgeInsets.symmetric(horizontal: 16, vertical: 12);
 
-  static void error(String message, {Duration? duration}) =>
-      _showToast(message, icon: _buildIcon(3), duration: duration);
+  static void error(String message, {Duration? duration}) => _showToast(
+    message,
+    icon: _buildIcon(3),
+    duration: duration,
+    borderColor: AppColors.redDestructive,
+  );
 
-  static void success(String message, {Duration? duration}) =>
-      _showToast(message, icon: _buildIcon(1), duration: duration);
+  static void success(String message, {Duration? duration}) => _showToast(
+    message,
+    icon: _buildIcon(1),
+    duration: duration,
+    borderColor: Colors.green,
+  );
 
-  static void warning(String message, {Duration? duration}) =>
-      _showToast(message, icon: _buildIcon(2), duration: duration);
+  static void warning(String message, {Duration? duration}) => _showToast(
+    message,
+    icon: _buildIcon(2),
+    duration: duration,
+    borderColor: Colors.amber,
+  );
 
   static void show(
     String message, {
@@ -48,12 +61,14 @@ class Toast {
     Widget? icon,
     Color? backgroundColor,
     Color? textColor,
+    Color? borderColor,
   }) => _showToast(
     message,
     icon: icon,
     duration: duration,
     textColor: textColor,
     backgroundColor: backgroundColor,
+    borderColor: borderColor,
   );
 
   static void _showToast(
@@ -62,6 +77,7 @@ class Toast {
     Duration? duration,
     Color? textColor,
     Color? backgroundColor,
+    Color? borderColor,
   }) {
     final color = backgroundColor ?? AppColors.grayLightest;
     _scaffoldKey.currentState?.showSnackBar(
@@ -83,6 +99,7 @@ class Toast {
           ],
         ),
         color: color,
+        borderColor: borderColor ?? AppColors.blueLight,
         duration: duration,
       ),
     );
@@ -141,6 +158,7 @@ class Toast {
     required String message,
     Duration? duration,
     Color? backgroundColor,
+    Color? borderColor,
     TextStyle? titleStyle,
     TextStyle? messageStyle,
   }) {
@@ -171,6 +189,7 @@ class Toast {
           ],
         ),
         color: color,
+        borderColor: borderColor ?? AppColors.blueLight,
         duration: duration,
       ),
     );
