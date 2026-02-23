@@ -6,11 +6,15 @@ import 'package:secure_note/src/src.dart';
 part 'auth_cubit_state.dart';
 
 class AuthCubit extends Cubit<AuthCubitState> {
-  AuthCubit({required AuthRepository authRepository})
-    : _authRepository = authRepository,
-      super(const AuthCubitState());
+  AuthCubit({
+    required AuthRepository authRepository,
+    required UserService userService,
+  }) : _authRepository = authRepository,
+       _userService = userService,
+       super(const AuthCubitState());
 
   final AuthRepository _authRepository;
+  final UserService _userService;
 
   // Initialize auth state
   Future<void> initialize() async {
@@ -53,9 +57,17 @@ class AuthCubit extends Cubit<AuthCubitState> {
       emit(state.copyWith(registerStatus: Status.error));
       return;
     }
-
+    final (userError, userInfo) = await _userService.createUser(user!);
+    if (userError != null) {
+      Logger.e(
+        "AuthCubit[register] : Failed to create user in Firestore: $userError",
+      );
+      emit(state.copyWith(registerStatus: Status.error));
+      await user.delete(); // Rollback Firebase Auth user creation
+      return;
+    }
     Logger.s(
-      "AuthCubit[register] : Registration successful. User: ${user?.email}",
+      "AuthCubit[register] : Registration successful. User: ${user.email}",
     );
     emit(state.copyWith(registerStatus: Status.success));
   }

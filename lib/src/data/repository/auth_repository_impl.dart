@@ -6,7 +6,8 @@ import 'package:secure_note/src/domain/domain.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthService _authService;
 
-  AuthRepositoryImpl(this._authService);
+  AuthRepositoryImpl({required FirebaseAuthService authService})
+    : _authService = authService;
 
   /// Login with email and password
   @override

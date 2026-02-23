@@ -10,7 +10,10 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(authRepository: di<AuthRepository>()),
+          create: (context) => AuthCubit(
+            authRepository: di<AuthRepository>(),
+            userService: di<UserService>(),
+          ),
         ),
       ],
       child: const _AppView(),
