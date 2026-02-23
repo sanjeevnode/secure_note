@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 /// Core Firebase Service - Provides access to Firebase instances
@@ -11,8 +12,8 @@ class FirebaseService {
   /// Firebase Auth instance
   FirebaseAuth get auth => FirebaseAuth.instance;
 
-  /// Future: Add Firestore instance
-  /// FirebaseFirestore get db => FirebaseFirestore.instance;
+  /// Firestore instance
+  FirebaseFirestore get db => FirebaseFirestore.instance;
 
   /// Future: Add Storage instance
   /// FirebaseStorage get storage => FirebaseStorage.instance;

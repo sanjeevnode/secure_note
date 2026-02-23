@@ -27,6 +27,7 @@ dependencies:
   equatable: ^2.0.8
   flutter_native_splash: ^2.4.7
   intl: ^0.20.2
+  cloud_firestore: ^6.1.2
 
 dev_dependencies:
   flutter_test:

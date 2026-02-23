@@ -12,6 +12,10 @@ Future<void> setupDependencies() async {
     () => FirebaseAuthService(di<FirebaseService>()),
   );
 
+  di.registerLazySingleton<FirestoreService>(
+    () => FirestoreService(di<FirebaseService>()),
+  );
+
   // Repositories - Lazy Singleton
   di.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(di<FirebaseAuthService>()),
