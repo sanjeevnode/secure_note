@@ -32,16 +32,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      floatingActionButton: LayoutBuilder(
-        builder: (context, constraints) {
-          final isSmallScreen = constraints.maxWidth < 600;
-          if (!isSmallScreen) return const SizedBox.shrink();
-          return FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: AppColors.emeraldPrimary,
-            child: const Icon(Icons.add, color: AppColors.white, size: 28),
-          );
-        },
+      floatingActionButton: SizedBox(
+        width: 56,
+        height: 56,
+        child: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: AppColors.emeraldPrimary,
+          child: const Icon(Icons.add, color: AppColors.white, size: 28),
+        ),
       ),
       child: Center(
         child: Container(
@@ -60,29 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SearchBox(),
-                  const SizedBox(width: 20),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add, size: 20),
-                    label: const Text(HomeConstants.newSecretButton),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.emeraldPrimary,
-                      textStyle: AppTextStyle.textMdSemibold,
-                    ),
-                  ),
-                ],
-              ),
+              const SearchBox(),
               const SizedBox(height: 20),
-              const Expanded(
-                child: SingleChildScrollView(
-                  child: Column(children: [Text("Note List")]),
-                ),
-              ),
+              const Expanded(child: NoteList()),
             ],
           ),
         ),

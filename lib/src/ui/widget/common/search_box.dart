@@ -44,7 +44,7 @@ class _SearchBoxState extends State<SearchBox> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 240,
+      // width: 240,
       child: TextFormField(
         controller: widget.controller ?? _controller,
         onChanged: onChange,
