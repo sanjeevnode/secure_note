@@ -32,32 +32,60 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 30),
-          Text(HomeConstants.heading, style: AppTextStyle.text2xlSemibold),
-          const SizedBox(height: 16),
-          Text(
-            HomeConstants.subHeading,
-            style: AppTextStyle.textLgRegular.copyWith(
-              color: AppColors.grayDark,
-            ),
-          ),
-          const SizedBox(height: 20),
-          const SearchBox(),
-          const SizedBox(height: 20),
-
-          const Expanded(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(children: [Text("Note List")]),
+      floatingActionButton: LayoutBuilder(
+        builder: (context, constraints) {
+          final isSmallScreen = constraints.maxWidth < 600;
+          if (!isSmallScreen) return const SizedBox.shrink();
+          return FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: AppColors.emeraldPrimary,
+            child: const Icon(Icons.add, color: AppColors.white, size: 28),
+          );
+        },
+      ),
+      child: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 970),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 30),
+              Text(HomeConstants.heading, style: AppTextStyle.text2xlSemibold),
+              const SizedBox(height: 8),
+              Text(
+                HomeConstants.subHeading,
+                style: AppTextStyle.textLgRegular.copyWith(
+                  color: AppColors.grayDark,
+                ),
               ),
-            ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SearchBox(),
+                  const SizedBox(width: 20),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.add, size: 20),
+                    label: const Text(HomeConstants.newSecretButton),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.emeraldPrimary,
+                      textStyle: AppTextStyle.textMdSemibold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: [Text("Note List")]),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -7,4 +7,7 @@ class HomeConstants {
       'Securely store and manage your sensitive information';
 
   static const String searchText = 'Search secrets...';
+
+  static const String emptyStateTitle = 'No secrets yet';
+  static const String newSecretButton = 'New Secret';
 }

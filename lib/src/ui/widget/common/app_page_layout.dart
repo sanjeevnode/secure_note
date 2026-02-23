@@ -6,6 +6,7 @@ class AppPageLayout extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final bool scrollable;
   final PreferredSizeWidget? appBar;
+  final Widget? floatingActionButton;
 
   const AppPageLayout({
     super.key,
@@ -13,12 +14,14 @@ class AppPageLayout extends StatelessWidget {
     this.padding = const EdgeInsets.all(20),
     this.scrollable = true,
     this.appBar,
+    this.floatingActionButton,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
+      floatingActionButton: floatingActionButton,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: AppColors.pageBackgroundGradient),
