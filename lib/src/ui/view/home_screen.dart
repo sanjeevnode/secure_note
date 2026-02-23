@@ -36,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
         width: 56,
         height: 56,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, AppRouteNames.newSecretNote);
+          },
           backgroundColor: AppColors.emeraldPrimary,
           child: const Icon(Icons.add, color: AppColors.white, size: 28),
         ),

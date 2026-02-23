@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:secure_note/src/src.dart';
 
 class NoteWidget extends StatefulWidget {
-  const NoteWidget({super.key, this.onTap});
+  const NoteWidget({
+    super.key,
+    this.onTap,
+    required this.title,
+    required this.date,
+  });
 
   final void Function()? onTap;
+  final String title;
+  final DateTime date;
   @override
   State<NoteWidget> createState() => _NoteWidgetState();
 }
@@ -54,7 +61,39 @@ class _NoteWidgetState extends State<NoteWidget> {
                 ),
               ),
               const SizedBox(width: 12),
-
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.textMdSemibold,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.calendar_today_outlined,
+                          color: AppColors.grayDarker,
+                          size: 14,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          formatDateMMMDYYYY(widget.date),
+                          style: AppTextStyle.textSmRegular.copyWith(
+                            color: AppColors.grayDark,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(width: 12),
               Icon(
                 Icons.arrow_forward_ios_outlined,

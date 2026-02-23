@@ -13,32 +13,23 @@ class _NoteListState extends State<NoteList> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        NoteWidget(
-          onTap: () {
-            Logger.i('NoteWidget 1 tapped');
-          },
-        ),
-        NoteWidget(
-          onTap: () {
-            Logger.i('NoteWidget 2 tapped');
-          },
-        ),
-        NoteWidget(
-          onTap: () {
-            Logger.i('NoteWidget 3 tapped');
-          },
-        ),
-        NoteWidget(
-          onTap: () {
-            Logger.i('NoteWidget 4 tapped');
-          },
-        ),
-        NoteWidget(
-          onTap: () {
-            Logger.i('NoteWidget 5 tapped');
-          },
-        ),
+        for (var note in notes)
+          NoteWidget(
+            title: note["title"],
+            date: note["date"],
+            onTap: () {
+              Navigator.pushNamed(context, AppRouteNames.newSecretNote);
+            },
+          ),
       ],
     );
   }
 }
+
+List<Map<String, dynamic>> notes = [
+  {"title": "Meeting with Client", "date": DateTime(2024, 2, 20)},
+  {"title": "Project Submission", "date": DateTime(2024, 3, 5)},
+  {"title": "Team Standup", "date": DateTime(2024, 1, 15)},
+  {"title": "Code Review", "date": DateTime(2024, 4, 10)},
+  {"title": "Product Launch", "date": DateTime(2024, 5, 1)},
+];

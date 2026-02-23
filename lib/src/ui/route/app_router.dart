@@ -21,6 +21,12 @@ class AppRouter {
       case AppRouteNames.profile:
         return _buildMaterialPageRoute(const Profile(), name: settings.name);
 
+      case AppRouteNames.newSecretNote:
+        return _buildMaterialPageRoute(
+          const NewSecretNote(),
+          name: settings.name,
+        );
+
       default:
         return _buildMaterialPageRoute(const Scaffold());
     }

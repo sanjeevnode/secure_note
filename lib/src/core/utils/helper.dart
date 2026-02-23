@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 /// Calculates responsive height based on percentage of screen height
 double getHeight(BuildContext context, double height) {
@@ -26,4 +27,8 @@ String getInitials(String? input) {
   final second = parts[1][0].toUpperCase();
 
   return "$first$second";
+}
+
+String formatDateMMMDYYYY(DateTime date) {
+  return DateFormat('MMM d, yyyy').format(date);
 }
