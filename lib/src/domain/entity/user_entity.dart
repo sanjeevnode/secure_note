@@ -1,24 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserEntity {
   final String uid;
   final String email;
-  final String? displayName;
-  final String? pin;
+  final String pin;
+  final DateTime pinUpdatedAt;
 
   UserEntity({
     required this.uid,
     required this.email,
-    this.displayName,
-    this.pin,
-  });
+    this.pin = "",
+    DateTime? pinUpdatedAt,
+  }) : pinUpdatedAt = pinUpdatedAt ?? DateTime.now();
 
   factory UserEntity.fromJson(Map<String, dynamic> map) {
     return UserEntity(
-      uid: map['uid']!,
-      email: map['email']!,
-      displayName: map['displayName'],
-      pin: map['pin'],
+      uid: map['uid'],
+      email: map['email'],
+      pin: map['pin'] ?? "",
+      pinUpdatedAt: map['pinUpdatedAt'] != null
+          ? (map['pinUpdatedAt'] as Timestamp).toDate()
+          : DateTime.now(),
     );
   }
 
@@ -26,34 +29,15 @@ class UserEntity {
     return {
       'uid': uid,
       'email': email,
-      if (displayName != null) 'displayName': displayName,
-      if (pin != null) 'pin': pin,
+      'pin': pin,
+      'pinUpdatedAt': Timestamp.fromDate(pinUpdatedAt),
     };
   }
 
-  UserEntity copyWith({
-    String? uid,
-    String? email,
-    String? displayName,
-    String? pin,
-    bool clearPin = false,
-  }) {
-    return UserEntity(
-      uid: uid ?? this.uid,
-      email: email ?? this.email,
-      displayName: displayName ?? this.displayName,
-      pin: clearPin ? null : pin ?? this.pin,
-    );
+  static UserEntity fromUser(User user) {
+    return UserEntity(uid: user.uid, email: user.email!);
   }
 
   @override
   String toString() => toJson().toString();
-
-  static UserEntity fromUser(User user) {
-    return UserEntity(
-      uid: user.uid,
-      email: user.email!,
-      displayName: user.displayName,
-    );
-  }
 }

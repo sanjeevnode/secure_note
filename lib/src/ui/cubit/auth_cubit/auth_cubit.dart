@@ -29,14 +29,35 @@ class AuthCubit extends Cubit<AuthCubitState> {
       password: password,
     );
 
-    if (error != null) {
+    if (error != null || user == null) {
       Logger.e("AuthCubit[login] : $error");
       emit(state.copyWith(loginStatus: Status.error));
       return;
     }
 
-    Logger.s("AuthCubit[login] : Login successful. User: ${user?.email}");
+    await createOrValidateUserPinEnabled(user);
+
+    Logger.s("AuthCubit[login] : Login successful. User: ${user.email}");
     emit(state.copyWith(loginStatus: Status.success, user: user));
+  }
+
+  Future<void> createOrValidateUserPinEnabled(User user) async {
+    final (error, isPinEnabled) = await _userService
+        .createOrValidateUserPinEnabled(user);
+    if (error != null || isPinEnabled == null) {
+      Logger.e("AuthCubit[createOrValidateUserPinEnabled] : $error");
+      return;
+    }
+
+    if (isPinEnabled) {
+      Logger.i(
+        "AuthCubit[createOrValidateUserPinEnabled] : User has PIN enabled",
+      );
+    } else {
+      Logger.i(
+        "AuthCubit[createOrValidateUserPinEnabled] : User does not have PIN enabled",
+      );
+    }
   }
 
   /// Register with email, password and username
@@ -57,17 +78,8 @@ class AuthCubit extends Cubit<AuthCubitState> {
       emit(state.copyWith(registerStatus: Status.error));
       return;
     }
-    final (userError, userInfo) = await _userService.createUser(user!);
-    if (userError != null) {
-      Logger.e(
-        "AuthCubit[register] : Failed to create user in Firestore: $userError",
-      );
-      emit(state.copyWith(registerStatus: Status.error));
-      await user.delete(); // Rollback Firebase Auth user creation
-      return;
-    }
     Logger.s(
-      "AuthCubit[register] : Registration successful. User: ${user.email}",
+      "AuthCubit[register] : Registration successful. User: ${user?.email}",
     );
     emit(state.copyWith(registerStatus: Status.success));
   }
