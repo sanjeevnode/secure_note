@@ -24,17 +24,17 @@ class _SplashState extends State<Splash> {
     if (!mounted) return;
 
     if (isAuthenticated) {
-      final isPinEnabled = await authCubit.isPinEnabled();
-      if (!mounted) return;
+      // final isPinEnabled = await authCubit.isPinEnabled();
+      // if (!mounted) return;
 
-      if (!isPinEnabled) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRouteNames.pinSetup,
-          (_) => false,
-        );
-        return;
-      }
+      // if (!isPinEnabled) {
+      //   Navigator.pushNamedAndRemoveUntil(
+      //     context,
+      //     AppRouteNames.pinSetup,
+      //     (_) => false,
+      //   );
+      //   return;
+      // }
 
       final user = authCubit.getCurrentUser();
       authCubit.setUser(user: user);

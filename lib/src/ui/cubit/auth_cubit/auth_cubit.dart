@@ -17,7 +17,15 @@ class AuthCubit extends Cubit<AuthCubitState> {
   final UserService _userService;
 
   // Initialize auth state
-  Future<void> initialize() async {}
+  Future<void> initialize() async {
+    emit(
+      state.copyWith(
+        loginStatus: Status.none,
+        registerStatus: Status.none,
+        pinStatus: Status.none,
+      ),
+    );
+  }
 
   /// Login with email and password
   Future<void> login({required String email, required String password}) async {
@@ -169,10 +177,12 @@ class AuthCubit extends Cubit<AuthCubitState> {
   }
 
   // Update user PIN
-  Future<bool> updatePin(String? newPin) async {
+  Future<void> updatePin(String? newPin) async {
+    emit(state.copyWith(pinStatus: Status.loading));
     if (state.user == null) {
       Logger.w("AuthCubit[updatePin] : No user currently logged in");
-      return false;
+      emit(state.copyWith(pinStatus: Status.error));
+      return;
     }
     final (error, success) = await _userService.updatePin(
       state.user!.uid,
@@ -180,9 +190,10 @@ class AuthCubit extends Cubit<AuthCubitState> {
     );
     if (error != null || success == false) {
       Logger.e("AuthCubit[updatePin] : $error");
-      return false;
+      emit(state.copyWith(pinStatus: Status.error));
+      return;
     }
     Logger.s("AuthCubit[updatePin] : PIN updated successfully");
-    return true;
+    emit(state.copyWith(pinStatus: Status.success));
   }
 }

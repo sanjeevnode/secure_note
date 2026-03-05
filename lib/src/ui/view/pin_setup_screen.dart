@@ -42,29 +42,66 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
     }
   }
 
+  Future<void> _logout() async {
+    await context.read<AuthCubit>().logout();
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRouteNames.auth,
+      (_) => false,
+    );
+  }
+
+  Future<void> _navigateToHome() async {
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRouteNames.home,
+      (_) => false,
+    );
+  }
+
+  Future<void> updatePin() async {
+    final authCubit = context.read<AuthCubit>();
+    await authCubit.updatePin('1234');
+  }
+
+  void _handleListner(Status pinStatus) {
+    if (pinStatus == Status.success) {
+      _navigateToHome();
+    } else if (pinStatus == Status.error) {
+      Toast.error('Failed to update PIN. Please try again.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AppPageLayout(
-      appBar: const CustomAppBar(title: 'Set up PIN'),
-      child: Column(
-        children: [
-          const Text('PIN setup screen'),
-          const SizedBox(height: 16),
-          const Text('This is a placeholder for the PIN setup screen.'),
-          const SizedBox(height: 16),
-          GradientButton(
-            label: 'Logout',
-            onSubmit: () async {
-              await context.read<AuthCubit>().logout();
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                AppRouteNames.auth,
-                (_) => false,
-              );
-            },
+    return BlocConsumer<AuthCubit, AuthCubitState>(
+      listener: (context, state) {
+        _handleListner(state.pinStatus);
+      },
+      builder: (context, state) {
+        return LoadingWrapper(
+          isLoading: state.pinStatus == Status.loading,
+          child: AppPageLayout(
+            appBar: const CustomAppBar(title: 'Set up PIN'),
+            child: Column(
+              children: [
+                const Text('PIN setup screen'),
+                const SizedBox(height: 16),
+                const Text('This is a placeholder for the PIN setup screen.'),
+                const SizedBox(height: 46),
+                GradientButton(
+                  label: 'Update PIN',
+                  onSubmit: () => updatePin(),
+                ),
+                const SizedBox(height: 56),
+                GradientButton(label: 'Logout', onSubmit: () => _logout()),
+              ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
