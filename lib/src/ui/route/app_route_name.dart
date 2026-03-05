@@ -10,4 +10,6 @@ class AppRouteNames {
   static const String profile = '/profile';
 
   static const String newSecretNote = '/new-secret-note';
+
+  static const String pinSetup = '/pin-setup';
 }

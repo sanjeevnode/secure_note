@@ -58,6 +58,32 @@ class AuthCubit extends Cubit<AuthCubitState> {
     }
   }
 
+  Future<UserEntity?> getUserEntity() async {
+    if (state.user == null) {
+      Logger.w("AuthCubit[getUserEntity] : No user currently logged in");
+      return null;
+    }
+    final (error, en) = await _userService.getUser(state.user!.uid);
+    if (error != null || en == null) {
+      Logger.e("AuthCubit[getUserEntity] : $error");
+      return null;
+    }
+    return en;
+  }
+
+  Future<bool> isPinEnabled() async {
+    if (state.user == null) {
+      Logger.w("AuthCubit[isPinEnabled] : No user currently logged in");
+      return false;
+    }
+    final (error, isEnabled) = await _userService.isPinEnabled(state.user!.uid);
+    if (error != null) {
+      Logger.e("AuthCubit[isPinEnabled] : $error");
+      return false;
+    }
+    return isEnabled;
+  }
+
   /// Register with email, password and username
   Future<void> register({
     required String email,

@@ -29,6 +29,16 @@ class _HomeScreenState extends State<HomeScreen> {
         AppRouteNames.auth,
         (_) => false,
       );
+    } else {
+      final isPinEnabled = await authCubit.isPinEnabled();
+      if (!mounted) return;
+      if (!isPinEnabled) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRouteNames.pinSetup,
+          (_) => false,
+        );
+      }
     }
   }
 

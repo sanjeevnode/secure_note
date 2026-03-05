@@ -1,15 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class PinSetupScreen extends StatefulWidget {
+  const PinSetupScreen({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<PinSetupScreen> createState() => _PinSetupScreenState();
 }
 
-class _ProfileState extends State<Profile> {
+class _PinSetupScreenState extends State<PinSetupScreen> {
   @override
   void initState() {
     super.initState();
@@ -32,10 +32,10 @@ class _ProfileState extends State<Profile> {
     } else {
       final isPinEnabled = await authCubit.isPinEnabled();
       if (!mounted) return;
-      if (!isPinEnabled) {
+      if (isPinEnabled) {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          AppRouteNames.pinSetup,
+          AppRouteNames.home,
           (_) => false,
         );
       }
@@ -45,16 +45,13 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
-      appBar: const CustomAppBar(
-        showBackButton: true,
-        title: ProfileConstants.title,
-      ),
+      appBar: const CustomAppBar(title: 'Set up PIN'),
       child: Column(
         children: [
-          const Text('Profile Screen'),
-          const SizedBox(height: 20),
-          const Text('This is the profile screen of the app.'),
-          const SizedBox(height: 20),
+          const Text('PIN setup screen'),
+          const SizedBox(height: 16),
+          const Text('This is a placeholder for the PIN setup screen.'),
+          const SizedBox(height: 16),
           GradientButton(
             label: 'Logout',
             onSubmit: () async {

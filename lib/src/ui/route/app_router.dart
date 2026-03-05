@@ -27,6 +27,12 @@ class AppRouter {
           name: settings.name,
         );
 
+      case AppRouteNames.pinSetup:
+        return _buildMaterialPageRoute(
+          const PinSetupScreen(),
+          name: settings.name,
+        );
+
       default:
         return _buildMaterialPageRoute(const NotFoundPage());
     }
