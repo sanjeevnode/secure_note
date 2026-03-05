@@ -14,8 +14,25 @@ class _AuthScreenState extends State<AuthScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthCubit>().initialize();
+      _initialize();
     });
+  }
+
+  Future<void> _initialize() async {
+    final authCubit = context.read<AuthCubit>();
+    bool isAuthenticated = authCubit.isAuthenticated();
+    if (!mounted) return;
+
+    if (isAuthenticated) {
+      final user = authCubit.getCurrentUser();
+      authCubit.setUser(user: user);
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteNames.home,
+        (_) => false,
+      );
+    }
   }
 
   @override

@@ -17,9 +17,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   final UserService _userService;
 
   // Initialize auth state
-  Future<void> initialize() async {
-    emit(const AuthCubitState());
-  }
+  Future<void> initialize() async {}
 
   /// Login with email and password
   Future<void> login({required String email, required String password}) async {

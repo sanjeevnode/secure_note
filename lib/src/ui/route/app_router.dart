@@ -28,7 +28,7 @@ class AppRouter {
         );
 
       default:
-        return _buildMaterialPageRoute(const Scaffold());
+        return _buildMaterialPageRoute(const NotFoundPage());
     }
   }
 

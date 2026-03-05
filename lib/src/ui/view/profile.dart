@@ -11,6 +11,28 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initialize();
+    });
+  }
+
+  Future<void> _initialize() async {
+    final authCubit = context.read<AuthCubit>();
+    final isAuthenticated = authCubit.isAuthenticated();
+    if (!mounted) return;
+
+    if (!isAuthenticated) {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteNames.auth,
+        (_) => false,
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppPageLayout(
       appBar: const CustomAppBar(
