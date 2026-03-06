@@ -2,45 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initialize();
-    });
-  }
-
-  Future<void> _initialize() async {
-    final authCubit = context.read<AuthCubit>();
-    final isAuthenticated = authCubit.isAuthenticated();
-    if (!mounted) return;
-
-    if (!isAuthenticated) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRouteNames.auth,
-        (_) => false,
-      );
-    } else {
-      final isPinEnabled = await authCubit.isPinEnabled();
-      if (!mounted) return;
-      if (!isPinEnabled) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRouteNames.pinSetup,
-          (_) => false,
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Clickable(
                 onTap: () {
                   if (state.user != null) {
-                    Navigator.pushNamed(context, AppRouteNames.profile);
+                    context.push(AppRouteNames.profile);
                   }
                 },
                 child: UserAvatar(userName: state.user?.displayName),
@@ -69,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 56,
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, AppRouteNames.newSecretNote);
+            context.push(AppRouteNames.newSecretNote);
           },
           backgroundColor: AppColors.emeraldPrimary,
           child: const Icon(Icons.add, color: AppColors.white, size: 28),

@@ -18,7 +18,7 @@ class _NoteListState extends State<NoteList> {
             title: note["title"],
             date: note["date"],
             onTap: () {
-              Navigator.pushNamed(context, AppRouteNames.newSecretNote);
+              context.push(AppRouteNames.newSecretNote);
             },
           ),
       ],

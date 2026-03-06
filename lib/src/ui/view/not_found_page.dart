@@ -118,11 +118,7 @@ class _NotFoundPageState extends State<NotFoundPage>
                 /// Button
                 ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      AppRouteNames.home,
-                      (_) => false,
-                    );
+                    context.go(AppRouteNames.home);
                   },
                   icon: const Icon(Icons.arrow_back_rounded),
                   label: const Text("Home"),

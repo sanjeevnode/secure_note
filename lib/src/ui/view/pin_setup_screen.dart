@@ -10,55 +10,10 @@ class PinSetupScreen extends StatefulWidget {
 }
 
 class _PinSetupScreenState extends State<PinSetupScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initialize();
-    });
-  }
-
-  Future<void> _initialize() async {
-    final authCubit = context.read<AuthCubit>();
-    final isAuthenticated = authCubit.isAuthenticated();
-    if (!mounted) return;
-
-    if (!isAuthenticated) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRouteNames.auth,
-        (_) => false,
-      );
-    } else {
-      final isPinEnabled = await authCubit.isPinEnabled();
-      if (!mounted) return;
-      if (isPinEnabled) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRouteNames.home,
-          (_) => false,
-        );
-      }
-    }
-  }
-
   Future<void> _logout() async {
     await context.read<AuthCubit>().logout();
     if (!mounted) return;
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRouteNames.auth,
-      (_) => false,
-    );
-  }
-
-  Future<void> _navigateToHome() async {
-    if (!mounted) return;
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRouteNames.home,
-      (_) => false,
-    );
+    context.go(AppRouteNames.auth);
   }
 
   Future<void> updatePin() async {
@@ -68,7 +23,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
 
   void _handleListner(Status pinStatus) {
     if (pinStatus == Status.success) {
-      _navigateToHome();
+      context.go(AppRouteNames.home);
     } else if (pinStatus == Status.error) {
       Toast.error('Failed to update PIN. Please try again.');
     }

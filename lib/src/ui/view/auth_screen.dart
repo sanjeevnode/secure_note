@@ -1,51 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:secure_note/src/src.dart';
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
-
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initialize();
-    });
-  }
-
-  Future<void> _initialize() async {
-    final authCubit = context.read<AuthCubit>();
-    bool isAuthenticated = authCubit.isAuthenticated();
-    if (!mounted) return;
-
-    if (isAuthenticated) {
-      final isPinEnabled = await authCubit.isPinEnabled();
-      if (!mounted) return;
-
-      if (!isPinEnabled) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRouteNames.pinSetup,
-          (_) => false,
-        );
-        return;
-      }
-
-      final user = authCubit.getCurrentUser();
-      authCubit.setUser(user: user);
-
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRouteNames.home,
-        (_) => false,
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

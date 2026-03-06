@@ -29,20 +29,31 @@ class _AppView extends StatefulWidget {
 }
 
 class __AppViewState extends State<_AppView> {
+  late final GoRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _router = AppRouter.router(context.read<AuthCubit>());
+  }
+
+  @override
+  void dispose() {
+    _router.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: AppTheme.standard,
       scaffoldMessengerKey: Toast.scaffoldKey,
-      navigatorKey: AppRouter.navigationKey,
       title: AppConstants.appName,
       debugShowCheckedModeBanner: false,
-      navigatorObservers: [AppRouter.routeObserver],
+      routerConfig: _router,
       builder: (context, child) {
         return CustomBehaviour(child: child!);
       },
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: AppRouteNames.splash,
     );
   }
 }

@@ -59,23 +59,8 @@ class _AuthFormState extends State<AuthForm> {
     await authCubit.login(email: a.email, password: a.password);
   }
 
-  Future<void> _handleNavigation() async {
-    final authCubit = context.read<AuthCubit>();
-    final isPinEnabled = await authCubit.isPinEnabled();
-    if (!mounted) return;
-    if (!isPinEnabled) {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRouteNames.pinSetup,
-        (_) => false,
-      );
-      return;
-    }
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      AppRouteNames.home,
-      (_) => false,
-    );
+  void _handleNavigation() {
+    context.go(AppRouteNames.home);
   }
 
   void _handleListners(Status loginStatus, Status registerStatus) {
