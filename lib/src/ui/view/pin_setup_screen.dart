@@ -40,19 +40,26 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
           isLoading: state.pinStatus == Status.loading,
           child: AppPageLayout(
             appBar: const CustomAppBar(title: PinSetupConstants.title),
-            child: Column(
-              children: [
-                const Text('PIN setup screen'),
-                const SizedBox(height: 16),
-                const Text('This is a placeholder for the PIN setup screen.'),
-                const SizedBox(height: 46),
-                GradientButton(
-                  label: 'Update PIN',
-                  onSubmit: () => updatePin(),
-                ),
-                const SizedBox(height: 56),
-                GradientButton(label: 'Logout', onSubmit: () => _logout()),
-              ],
+            fixedContentWidth: true,
+            child: Container(
+              color: Colors.pink,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: [
+                  const Text('PIN setup screen'),
+                  const SizedBox(height: 16),
+                  const Text('This is a placeholder for the PIN setup screen.'),
+                  const SizedBox(height: 46),
+                  GradientButton(
+                    label: 'Update PIN',
+                    onSubmit: () => updatePin(),
+                  ),
+                  const SizedBox(height: 56),
+                  GradientButton(label: 'Logout', onSubmit: () => _logout()),
+                ],
+              ),
             ),
           ),
         );

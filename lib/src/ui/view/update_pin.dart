@@ -12,7 +12,8 @@ class _UpdatePinState extends State<UpdatePin> {
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
-      appBar: CustomAppBar(title: "Update PIN", showBackButton: true),
+      appBar: const CustomAppBar(title: "Update PIN", showBackButton: true),
+      fixedContentWidth: true,
       child: Column(
         children: [
           Text("Update PIN", style: AppTextStyle.textLgSemibold),

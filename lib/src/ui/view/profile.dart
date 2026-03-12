@@ -12,6 +12,7 @@ class Profile extends StatelessWidget {
         showBackButton: true,
         title: ProfileConstants.title,
       ),
+      fixedContentWidth: true,
       child: Column(
         children: [
           const Text('Profile Screen'),

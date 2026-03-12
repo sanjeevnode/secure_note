@@ -38,29 +38,24 @@ class HomeScreen extends StatelessWidget {
           child: const Icon(Icons.add, color: AppColors.white, size: 28),
         ),
       ),
-      child: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 970),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30),
-              Text(HomeConstants.heading, style: AppTextStyle.text2xlSemibold),
-              const SizedBox(height: 8),
-              Text(
-                HomeConstants.subHeading,
-                style: AppTextStyle.textLgRegular.copyWith(
-                  color: AppColors.grayDark,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const SearchBox(),
-              const SizedBox(height: 20),
-              const Expanded(child: NoteList()),
-            ],
+      fixedContentWidth: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 30),
+          Text(HomeConstants.heading, style: AppTextStyle.text2xlSemibold),
+          const SizedBox(height: 8),
+          Text(
+            HomeConstants.subHeading,
+            style: AppTextStyle.textLgRegular.copyWith(
+              color: AppColors.grayDark,
+            ),
           ),
-        ),
+          const SizedBox(height: 20),
+          const SearchBox(),
+          const SizedBox(height: 20),
+          const Expanded(child: NoteList()),
+        ],
       ),
     );
   }

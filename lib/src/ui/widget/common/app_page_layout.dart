@@ -7,6 +7,8 @@ class AppPageLayout extends StatelessWidget {
   final bool scrollable;
   final PreferredSizeWidget? appBar;
   final Widget? floatingActionButton;
+  final bool fixedContentWidth;
+  final double maxContentWidth;
 
   const AppPageLayout({
     super.key,
@@ -15,7 +17,20 @@ class AppPageLayout extends StatelessWidget {
     this.scrollable = true,
     this.appBar,
     this.floatingActionButton,
+    this.fixedContentWidth = false,
+    this.maxContentWidth = 970,
   });
+
+  Widget _buildFixedContent(Widget child) {
+    if (!fixedContentWidth) return child;
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxContentWidth),
+        child: SizedBox(width: double.infinity, child: child),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +58,19 @@ class AppPageLayout extends StatelessWidget {
                               minHeight: constraints.maxHeight,
                               minWidth: constraints.maxWidth,
                             ),
-                            child: Padding(padding: padding, child: child),
+                            child: Padding(
+                              padding: padding,
+                              child: _buildFixedContent(child),
+                            ),
                           ),
                         );
                       },
                     )
                   : SizedBox.expand(
-                      child: Padding(padding: padding, child: child),
+                      child: Padding(
+                        padding: padding,
+                        child: _buildFixedContent(child),
+                      ),
                     ),
             ),
           ),

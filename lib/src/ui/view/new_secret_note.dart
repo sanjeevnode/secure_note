@@ -7,6 +7,7 @@ class NewSecretNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPageLayout(
+      fixedContentWidth: true,
       appBar: const CustomAppBar(title: "New Secret", showBackButton: true),
       child: Column(
         children: [
