@@ -39,7 +39,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
         return LoadingWrapper(
           isLoading: state.pinStatus == Status.loading,
           child: AppPageLayout(
-            appBar: const CustomAppBar(title: 'Set up PIN'),
+            appBar: const CustomAppBar(title: PinSetupConstants.title),
             child: Column(
               children: [
                 const Text('PIN setup screen'),
