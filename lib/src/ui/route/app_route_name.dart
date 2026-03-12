@@ -12,4 +12,6 @@ class AppRouteNames {
   static const String newSecretNote = '/new-secret-note';
 
   static const String pinSetup = '/pin-setup';
+
+  static const String updatePin = '/update-pin';
 }

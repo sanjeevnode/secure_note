@@ -60,7 +60,8 @@ class AppRouter {
         // Protected routes require pin
         if (location == AppRouteNames.home ||
             location == AppRouteNames.profile ||
-            location == AppRouteNames.newSecretNote) {
+            location == AppRouteNames.newSecretNote ||
+            location == AppRouteNames.updatePin) {
           final isPinEnabled = await authCubit.isPinEnabled();
           if (!isPinEnabled) return AppRouteNames.pinSetup;
           return null;
@@ -99,6 +100,10 @@ class AppRouter {
         GoRoute(
           path: AppRouteNames.pinSetup,
           builder: (context, state) => const PinSetupScreen(),
+        ),
+        GoRoute(
+          path: AppRouteNames.updatePin,
+          builder: (context, state) => const UpdatePin(),
         ),
       ],
       errorBuilder: (context, state) => const NotFoundPage(),

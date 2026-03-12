@@ -5,3 +5,4 @@ export 'not_found_page.dart';
 export 'pin_setup_screen.dart';
 export 'profile.dart';
 export 'splash.dart';
+export 'update_pin.dart';

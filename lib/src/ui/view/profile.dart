@@ -19,6 +19,12 @@ class Profile extends StatelessWidget {
           const Text('This is the profile screen of the app.'),
           const SizedBox(height: 20),
           GradientButton(
+            label: 'Update PIN',
+            onSubmit: () async {
+              context.push(AppRouteNames.updatePin);
+            },
+          ),
+          GradientButton(
             label: 'Logout',
             onSubmit: () async {
               await context.read<AuthCubit>().logout();
