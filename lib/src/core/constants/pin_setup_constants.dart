@@ -3,10 +3,12 @@ class PinSetupConstants {
 
   static const String title = 'Manage PIN';
 
-  static const String updatePinTitle = 'Update PIN';
+  static const String updatePinTitle = 'Change Security PIN';
 
-  static const String setupPinTitle = 'Set New PIN';
+  static const String updatePinDescription =
+      'Update your PIN to continue protecting your encrypted notes.';
+  static const String setupPinTitle = 'Create Security PIN';
 
   static const String setupPinDescription =
-      'Set up a PIN to protect your notes.';
+      'This code keeps your private notes encrypted and safe.';
 }

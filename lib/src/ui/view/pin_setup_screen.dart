@@ -37,29 +37,52 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
       },
       builder: (context, state) {
         return LoadingWrapper(
-          isLoading: state.pinStatus == Status.loading,
+          isLoading:
+              state.pinStatus == Status.loading ||
+              state.logoutStatus == Status.loading,
           child: AppPageLayout(
-            appBar: const CustomAppBar(title: PinSetupConstants.title),
-            fixedContentWidth: true,
-            child: Container(
-              color: Colors.pink,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-
-                children: [
-                  const Text('PIN setup screen'),
-                  const SizedBox(height: 16),
-                  const Text('This is a placeholder for the PIN setup screen.'),
-                  const SizedBox(height: 46),
-                  GradientButton(
-                    label: 'Update PIN',
-                    onSubmit: () => updatePin(),
+            appBar: CustomAppBar(
+              leading: [
+                Assets.icons.manage.svg(width: 24, height: 24),
+                const SizedBox(width: 12),
+              ],
+              title: PinSetupConstants.title,
+              actions: [
+                Clickable(
+                  onTap: () {
+                    _logout();
+                  },
+                  child: Assets.icons.logout.svg(
+                    width: 28,
+                    height: 28,
+                    // ignore: deprecated_member_use_from_same_package
+                    color: AppColors.redPrimary,
                   ),
-                  const SizedBox(height: 56),
-                  GradientButton(label: 'Logout', onSubmit: () => _logout()),
-                ],
-              ),
+                ),
+              ],
+            ),
+            fixedContentWidth: true,
+
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+
+                const SizedBox(height: 30),
+                Text(
+                  PinSetupConstants.setupPinTitle,
+                  style: AppTextStyle.text2xlSemibold,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  PinSetupConstants.setupPinDescription,
+                  style: AppTextStyle.textLgRegular.copyWith(
+                    color: AppColors.grayDark,
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
           ),
         );

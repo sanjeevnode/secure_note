@@ -118,15 +118,17 @@ class AuthCubit extends Cubit<AuthCubitState> {
 
   /// Logout current user
   Future<void> logout() async {
+    emit(state.copyWith(logoutStatus: Status.loading));
     final (error, success) = await _authRepository.logout();
 
     if (error != null) {
       Logger.e("AuthCubit[logout] : $error");
+      emit(state.copyWith(logoutStatus: Status.error));
       return;
     }
 
     Logger.s("AuthCubit[logout] : Logout successful");
-    emit(state.copyWith(resetUser: true));
+    emit(state.copyWith(resetUser: true, logoutStatus: Status.success));
   }
 
   /// Get current user
