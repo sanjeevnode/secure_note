@@ -23,18 +23,16 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
   Future<void> handleSubmit() async {
     final authCubit = context.read<AuthCubit>();
     if (_pin != _confirmPin) {
-      Toast.error('PIN and Confirm PIN do not match.');
+      Toast.error(PinSetupConstants.errorPinMismatch);
       return;
     }
     if (_pin.length != 6) {
-      Toast.error('PIN must be exactly 6 characters long.');
+      Toast.error(PinSetupConstants.errorPinLength);
       return;
     }
     final validPinPattern = RegExp(r'^[A-Za-z0-9@#_-]{6}$');
     if (!validPinPattern.hasMatch(_pin)) {
-      Toast.error(
-        'PIN can only contain letters, numbers, and @, #, _ or - characters.',
-      );
+      Toast.error(PinSetupConstants.errorPinInvalidChars);
       return;
     }
     await authCubit.updatePin(_pin);
@@ -44,7 +42,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
     if (pinStatus == Status.success) {
       context.go(AppRouteNames.home);
     } else if (pinStatus == Status.error) {
-      Toast.error('Failed to update PIN. Please try again.');
+      Toast.error(PinSetupConstants.errorPinUpdateFailed);
     }
   }
 
@@ -121,13 +119,16 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                 const SizedBox(height: 20),
 
                 Text(
-                  'Note: PIN must be 6 characters and may include A-Z, a-z, 0-9, @, #, _ or -.',
+                  PinSetupConstants.pinNote,
                   style: AppTextStyle.textMdSemibold.copyWith(
                     color: Colors.deepOrange,
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text('PIN', style: AppTextStyle.textLgSemibold),
+                Text(
+                  PinSetupConstants.pinLabel,
+                  style: AppTextStyle.textLgSemibold,
+                ),
                 const SizedBox(height: 10),
                 Pinput(
                   defaultPinTheme: defaultPinTheme,
@@ -141,7 +142,10 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                   }),
                 ),
                 const SizedBox(height: 20),
-                Text('Confirm PIN', style: AppTextStyle.textLgSemibold),
+                Text(
+                  PinSetupConstants.confirmPinLabel,
+                  style: AppTextStyle.textLgSemibold,
+                ),
                 const SizedBox(height: 10),
                 Pinput(
                   defaultPinTheme: defaultPinTheme,
@@ -155,7 +159,10 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                   }),
                 ),
                 const SizedBox(height: 20),
-                GradientButton(label: "Submit", onSubmit: handleSubmit),
+                GradientButton(
+                  label: PinSetupConstants.submitLabel,
+                  onSubmit: handleSubmit,
+                ),
               ],
             ),
           ),
