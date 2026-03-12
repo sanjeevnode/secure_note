@@ -29,20 +29,8 @@ class AppRouter {
         final isAuth = authCubit.isAuthenticated();
         final location = state.matchedLocation;
 
-        // Splash: determine initial destination
-        if (location == AppRouteNames.splash) {
-          if (isAuth) {
-            // Set user if not already set (first launch)
-            if (authCubit.state.user == null) {
-              final user = authCubit.getCurrentUser();
-              authCubit.setUser(user: user);
-            }
-            final isPinEnabled = await authCubit.isPinEnabled();
-            if (!isPinEnabled) return AppRouteNames.pinSetup;
-            return AppRouteNames.home;
-          }
-          return AppRouteNames.auth;
-        }
+        // Splash handles its own initialization and navigates away
+        if (location == AppRouteNames.splash) return null;
 
         // Not authenticated → must be on auth screen
         if (!isAuth) {
