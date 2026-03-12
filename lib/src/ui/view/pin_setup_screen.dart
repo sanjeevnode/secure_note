@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinput/pinput.dart';
 import 'package:secure_note/src/src.dart';
 
 class PinSetupScreen extends StatefulWidget {
@@ -10,15 +11,33 @@ class PinSetupScreen extends StatefulWidget {
 }
 
 class _PinSetupScreenState extends State<PinSetupScreen> {
+  String _pin = "";
+  String _confirmPin = "";
+
   Future<void> _logout() async {
     await context.read<AuthCubit>().logout();
     if (!mounted) return;
     context.go(AppRouteNames.auth);
   }
 
-  Future<void> updatePin() async {
+  Future<void> handleSubmit() async {
     final authCubit = context.read<AuthCubit>();
-    await authCubit.updatePin('1234');
+    if (_pin != _confirmPin) {
+      Toast.error('PIN and Confirm PIN do not match.');
+      return;
+    }
+    if (_pin.length != 6) {
+      Toast.error('PIN must be exactly 6 characters long.');
+      return;
+    }
+    final validPinPattern = RegExp(r'^[A-Za-z0-9@#_-]{6}$');
+    if (!validPinPattern.hasMatch(_pin)) {
+      Toast.error(
+        'PIN can only contain letters, numbers, and @, #, _ or - characters.',
+      );
+      return;
+    }
+    await authCubit.updatePin(_pin);
   }
 
   void _handleListner(Status pinStatus) {
@@ -28,6 +47,24 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
       Toast.error('Failed to update PIN. Please try again.');
     }
   }
+
+  PinTheme get defaultPinTheme => PinTheme(
+    width: 56,
+    height: 56,
+    textStyle: AppTextStyle.textLgSemibold.copyWith(
+      color: AppColors.primaryDark,
+    ),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      border: Border.all(color: AppColors.primaryDark),
+      borderRadius: BorderRadius.circular(14),
+    ),
+  );
+
+  PinTheme get focusedPinTheme => defaultPinTheme.copyDecorationWith(
+    border: Border.all(color: AppColors.emeraldPrimary, width: 2),
+    borderRadius: BorderRadius.circular(14),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +119,43 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+
+                Text(
+                  'Note: PIN must be 6 characters and may include A-Z, a-z, 0-9, @, #, _ or -.',
+                  style: AppTextStyle.textMdSemibold.copyWith(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text('PIN', style: AppTextStyle.textLgSemibold),
+                const SizedBox(height: 10),
+                Pinput(
+                  defaultPinTheme: defaultPinTheme,
+                  focusedPinTheme: focusedPinTheme,
+                  showCursor: true,
+                  length: 6,
+                  obscureText: true,
+                  obscuringCharacter: '#',
+                  onCompleted: (pin) => setState(() {
+                    _pin = pin;
+                  }),
+                ),
+                const SizedBox(height: 20),
+                Text('Confirm PIN', style: AppTextStyle.textLgSemibold),
+                const SizedBox(height: 10),
+                Pinput(
+                  defaultPinTheme: defaultPinTheme,
+                  focusedPinTheme: focusedPinTheme,
+                  showCursor: true,
+                  length: 6,
+                  obscureText: true,
+                  obscuringCharacter: '#',
+                  onCompleted: (pin) => setState(() {
+                    _confirmPin = pin;
+                  }),
+                ),
+                const SizedBox(height: 20),
+                GradientButton(label: "Submit", onSubmit: handleSubmit),
               ],
             ),
           ),
