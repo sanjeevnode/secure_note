@@ -25,4 +25,6 @@ class PinSetupConstants {
       'PIN can only contain letters, numbers, and @, #, _ or - characters.';
   static const String errorPinUpdateFailed =
       'Failed to update PIN. Please try again.';
+
+  static const String pinValidator = r'^[A-Za-z0-9@#_-]{6}$';
 }

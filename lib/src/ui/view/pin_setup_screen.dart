@@ -30,7 +30,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
       Toast.error(PinSetupConstants.errorPinLength);
       return;
     }
-    final validPinPattern = RegExp(r'^[A-Za-z0-9@#_-]{6}$');
+    final validPinPattern = RegExp(PinSetupConstants.pinValidator);
     if (!validPinPattern.hasMatch(_pin)) {
       Toast.error(PinSetupConstants.errorPinInvalidChars);
       return;
@@ -133,6 +133,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                 Pinput(
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: focusedPinTheme,
+                  keyboardType: TextInputType.text,
                   showCursor: true,
                   length: 6,
                   obscureText: true,
@@ -150,6 +151,7 @@ class _PinSetupScreenState extends State<PinSetupScreen> {
                 Pinput(
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: focusedPinTheme,
+                  keyboardType: TextInputType.text,
                   showCursor: true,
                   length: 6,
                   obscureText: true,
