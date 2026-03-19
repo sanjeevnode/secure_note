@@ -99,4 +99,23 @@ class UserService {
       return (e.toAppException(), null);
     }
   }
+
+  Future<(AppException?, bool)> verifyPin({
+    required String uid,
+    required String pin,
+  }) async {
+    try {
+      final (error, data) = await _firestoreService.getDocument(
+        path: _path(uid),
+      );
+      if (error != null) throw error;
+      if (data == null) {
+        throw MissingDataException(message: 'User not found', code: '404');
+      }
+      final user = UserEntity.fromJson(data);
+      return (null, user.pin == pin);
+    } catch (e) {
+      return (e.toAppException(), false);
+    }
+  }
 }

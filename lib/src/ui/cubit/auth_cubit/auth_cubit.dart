@@ -198,4 +198,27 @@ class AuthCubit extends Cubit<AuthCubitState> {
     Logger.s("AuthCubit[updatePin] : PIN updated successfully");
     emit(state.copyWith(pinStatus: Status.success));
   }
+
+  Future<bool> verifyPin(String pin) async {
+    if (state.user == null) {
+      Logger.w("AuthCubit[verifyPin] : No user currently logged in");
+      return false;
+    }
+    final (error, isPinEnabled) = await _userService.isPinEnabled(
+      state.user!.uid,
+    );
+    if (error != null) {
+      Logger.e("AuthCubit[verifyPin] : $error");
+      return false;
+    }
+    final (err, isVerified) = await _userService.verifyPin(
+      uid: state.user!.uid,
+      pin: pin,
+    );
+    if (err != null) {
+      Logger.e("AuthCubit[verifyPin] : $err");
+      return false;
+    }
+    return isVerified;
+  }
 }

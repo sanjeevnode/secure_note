@@ -14,6 +14,10 @@ class PinSetupConstants {
 
   static const String pinLabel = 'PIN';
   static const String confirmPinLabel = 'Confirm PIN';
+
+  static const String newPinLabel = 'New PIN';
+  static const String currentPinLabel = 'Current PIN';
+  static const String confirmNewPinLabel = 'Confirm New PIN';
   static const String submitLabel = 'Submit';
 
   static const String pinNote =
